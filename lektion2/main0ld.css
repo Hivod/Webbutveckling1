@@ -1,0 +1,23 @@
+body {
+  background-color: #222;
+  width: 80%;
+  margin: 0 auto;
+}
+
+p {
+  font-size: 18px;
+  font-family: 'Lucida Console';
+  color: #82C000;
+}
+
+.bottomtext {
+  font-size: 12px;
+  color: #bbb;
+  font-family: 'impact';
+}
+
+h1 {
+  font-size: 40px;
+  font-family: 'Lobster';
+  color: #fff;
+}
