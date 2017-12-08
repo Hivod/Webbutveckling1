@@ -3,10 +3,8 @@ body {
 }
 
 main {
-  height: 20000px;
-  width: 60%;
+  width: 70%;
   margin: 0 auto;
-  background-color: #242424;
 }
 
 p {
@@ -14,7 +12,7 @@ p {
   margin: 0 auto;
   font-size: 18px;
   font-family: 'Lucida Console';
-  color: #eee;
+  color: #C0C0C0;
 }
 
 h1 {
@@ -22,17 +20,6 @@ h1 {
   font-size: 40px;
   color: #A080C0;
   text-align: center;
-}
-
-a {
-  padding: 6px 0;
-  text-decoration: none;
-  font-family: "Lucida Console", sans-serif;
-  color: #fff;
-}
-
-a:hover {
-  
 }
 
 .image {
@@ -44,17 +31,4 @@ a:hover {
   height: 30px;
   width: 100%;
   background-color: #333;
-}
-
-ul {
-  list-style-type: none;
-  margin: 0px;
-  padding: 0px;
-}
-
-li {
-  background-color: #666;
-  margin: 0 10%;
-  float: left;
-  padding: 6px 3.3775%;
 }

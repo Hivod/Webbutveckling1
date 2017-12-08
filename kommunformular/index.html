@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kommunformulär</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+<header>
+  <h1>formulär</h1>
+</header>
+<main>
+  <div class="form">
+    <form action="http://172.20.1.15/kommun/anslagstavla" method="post">
+      <label for="title">Titel </label>
+      <input type="text" name="title" id="title" placeholder="Titel" required> <br>
+      
+      <label for="authority">Organ </label>
+      <input type="text" name="authority" id="authority" placeholder="Organ" required> <br>
+      
+      <label for="repository">Förvaringsplats </label>
+      <input type="text" name="repository" id="repository" placeholder="Förvaringsplats" required> <br>
+      
+      <label for="stub">Beskrivning </label>
+      <textarea name="stub" placeholder="Beskrivning" id="stub" rows="6"></textarea> <br>
+      
+      <label for="pubdate">Publiceringsdatum </label>
+      <input type="date" name="pubdate" id="pubdate" required> <br>
+      
+      <label for="meetingdate">Sammanträdesdatum </label>
+      <input type="date" name="meetingdate" id="meetingdate" required> <br>
+      
+      <input type="submit" id="submit">
+    </form>
+  </div>
+</main>  
+</body>
+</html>

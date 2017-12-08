@@ -1,0 +1,39 @@
+#content {
+  width: 50%;
+  margin: 0 auto;
+}
+
+form {
+  font-family: sans-serif;
+  backgro.und-color: lightgoldenrodyellow;
+}
+
+input, textarea {
+  border: 1px solid lightblue;
+  border-radius: 4px;
+  height: 1.75em;
+  width: 300px;
+}
+
+textarea {
+  height: 3em;
+  width: 296px;
+  resize: vertical;
+}
+
+div.arende {
+  display: inline-block;
+  margin: 0;
+}
+
+input.arende {
+  width: 200px;
+}
+
+div.arendetyp {
+  display: inline-block;
+}
+
+input.arendetyp {
+  width: 92px;
+}

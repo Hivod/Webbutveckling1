@@ -1,0 +1,52 @@
+html {
+  font-size: 16px;
+  font-family: Open Sans, sans-serif;
+}
+
+body {
+  font-size: 62.5%;
+  margin: 0;
+}
+
+main {
+  width: 56.25%;
+  margin: 0 auto;
+  background: #f2e7db;
+}
+
+#header {
+  height: 10%;
+  background: #005781;
+}
+
+#logo {
+  margin: 0 auto;
+}
+
+#logoimage {
+  width: 6%;
+  float: left;
+}
+
+#logotext {
+  font-family: Alfa Slab One, sans-serif;
+  font-weight: 400;
+  font-size: 3.1em;
+  color: white;
+  float: left;
+  margin-left: 2%;
+}
+
+#content {
+  height: 100%;
+}
+
+.content {
+  width: 80%;
+  margin: 2% 10%;
+  font-size: 2em;
+}
+
+img.content {
+  margin: 5% 10% 2%;
+}

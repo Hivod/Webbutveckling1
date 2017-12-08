@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Anslagstavla</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="content">
+    <form action="/action_page.php" method="get">
+      <div id="arende"><div class="arende">
+        Ärende <br>
+        <input type="text" name="arende" class="arende"></div>
+      <div class="arendetyp">
+        Ärendetyp <br>
+        <input type="number" class="arendetyp" min="1" max="5" id="arendetyp" name="arendetyp"></div></div>
+      <label for="organ">Organ </label> <br>
+      <input type="text" name="organ">
+      <br>
+      Beskrivning <br>
+      <textarea type="text" name="beskrivning"></textarea>
+      <br>
+      Sammanträdesdatum <br>
+      <input type="date" name="sammantradesdatum">
+      <br>
+      Publiceringsdatum <br>
+      <input type="date" name="publiceringsdatum">
+      <br>
+      Förvaringsplats <br>
+      <input type="text" name="forvaringsplats">
+      <br>
+      Bifoga PDF-fil <br>
+      <input type="file" name="pdf">
+      <br>
+      <br>
+      <input type="submit" name="skicka">
+      
+    </form>
+    </div>
+    
+    <!--script src="script.js"></script-->
+    
+  </body>
+</html>
