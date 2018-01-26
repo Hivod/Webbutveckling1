@@ -46,6 +46,7 @@ input, #stub {
   width: 100%;
   margin: 5px 0;
   font-family: inherit;
+  padding-left: 2px;
 }
 
 input {

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+	<title>View post</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<style>
+		html {
+			font-size: 16px;
+		}
+		body {
+			font-family: 'Open Sans', sans-serif;
+			font-size: 62.5%;
+		}
+		main {
+			font-size: 1.4em;
+			width: 80%;
+			margin: 0 auto;
+			padding: 20px;
+		}
+		ul {
+			list-style: none;
+		}
+		li {
+		    background-color: #eeeeee;
+		}
+		li.odd {
+			background-color: #ffffff;
+		}
+	</style>
+</head>
+<body>
+<main>
+	<div id="post"></div>
+	<div>
+		<h2>Anslag/Bevis</h2>
+		<ul id="info"></ul>
+	</div>
+
+
+</main>
+<script>
+	function getParameterByName(name, url) {
+		if (!url) url = window.location.href;
+			name = name.replace(/[\[\]]/g, "\\$&");
+		var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		results = regex.exec(url);
+		if (!results) return null;
+		if (!results[2]) return '';
+		return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+
+
+	fetch("http://172.20.1.15/kommun/anslagstavla/" + getParameterByName("id"))
+	.then(function(response) { return response.json(); })
+	.then(function(data) {
+
+		var post = document.getElementById("post");
+		var info = document.getElementById("info");
+
+		var title = document.createElement("h1");
+		var stub = document.createElement("p");
+
+		title.textContent = data.title + ", " + data.meetingdate;
+		stub.textContent = data.stub;
+
+		var arr = Array(5);
+		for(var i = 0; i < arr.length; i++) {
+			var li = document.createElement("li");
+			if (i % 2)
+				li.className = "odd";
+			arr[i] = li;
+		}
+
+		arr[0].textContent = "Organ: " + data.authority;
+		arr[1].textContent = "Sammanträdesdatum: " + data.meetingdate;
+		arr[2].textContent = "Anslaget publicerades: " + data.pubdate;
+		arr[3].textContent = "Anslaget tas ner: " + data.pubdate;
+		arr[4].textContent = "Förvaringsplats för protokollet: " + data.repository;
+
+		for(var i = 0; i < arr.length; i++) {
+			info.appendChild(arr[i]);
+		}
+
+		post.appendChild(title);
+		post.appendChild(stub);
+
+	});
+</script>
+</body>
+</html>

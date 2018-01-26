@@ -1,0 +1,99 @@
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 62.5%;
+}
+
+main {
+  margin: 0 auto;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: sans-serif;
+  font-size: 3em;
+  text-align: center;
+}
+
+p, li {
+  font-size: 1.8em;
+}
+
+header {
+  min-height: 24px;
+  border-bottom: 2px solid black;
+}
+
+ul.menu{padding-left: 200px;}
+li.menu {
+  float: left;
+  margin: 0 10px;
+  list-style: none;
+}
+
+#clickdiv {
+  width: 240px;
+  margin: 100px auto;
+}
+
+#clickerbutton {
+  height: 240px;
+  width: 240px;
+  border: none;
+  border-radius: 100%;
+  background: #2d3052;
+  color: white;
+  transition-duration: 100ms;
+}
+
+#clickerbutton:hover {
+  transform: scale(1.1);
+}
+
+#clickerbutton:active {
+  transform: scale(1)
+}
+
+#clickerbutton:focus {
+  outline: 0px;
+}
+
+#rightsidebar {
+  background: lightgray;
+  float: right;
+  margin-top: -535px;
+  margin-right: -8px;
+  height: 100vh;
+  width: 320px;
+}
+
+#upgrades {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.upgrade {
+  outline: 0;
+  font-size: 2em;
+  font-weight: 600;
+  border: 0;
+  border-bottom: 2px solid gray;
+  background: #f2f2f2;
+  width: 100%;
+  height: 100px;
+  transition-duration: 150ms;
+}
+
+.upgrade:hover {
+  background: #f8f8f8;
+}
+
+.upgrade:active {
+  background: gray;
+  color: white;
+}

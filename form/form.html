@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
+	<title>Anslagstavla</title>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+	<style>
+		html {
+			font-size: 16px;
+		}
+		body {
+			font-family: 'Open Sans', sans-serif;
+			font-size: 62.5%;
+		}
+		main {
+			font-size: 1.4em;
+			width: 80%;
+			margin: 0 auto;
+			padding: 20px;
+		}
+		label {
+			float: left;
+			padding-right: 20px;
+		}
+		input, textarea {
+			margin:10px;
+			padding: 2px;
+			display: block;
+			resize: none;
+			width: 90%;
+		}
+		form {
+			border: 1px solid black;
+			padding: 10px;
+		}
+	</style>
+</head>
+<body>
+<main>
+	<h1>Anslagstavla officiell</h1>
+
+	<p class="ingress">Detta är den digitala versionen av Hittepå kommuns officiella anslagstavla som finns i kommunhuset i Hittepå.</p>
+
+	<p>Från att beslutet publiceras har du möjlighet att, inom tre veckor, överklaga. Du kan läsa mer under länken "Överklaga beslut" längre ned på sidan.</p>
+
+	<h2>Aktuella anslag och kungörelser</h2>
+
+	<div id="posts"></div>
+	<form action="http://172.20.1.15/kommun/anslagstavla" method="post">
+<!--	<form action="http://localhost:8000/anslagstavla" method="post"> -->
+		<label for="title">Titel: </label>
+		<input type="text" id="title" name="title">
+		
+		<label for="authority">Organ: </label>
+		<input type="text" id="authority" name="authority">
+		
+		<label for="repository">Förvaringsplats: </label>
+		<input type="text" id="repository" name="repository">
+		
+		<label for="stub">Beskrivning: </label>
+		<textarea name="stub" id="stub" rows="6"></textarea>
+		
+		<label for="pubdate">Publiceringsdatum: </label>
+		<input type="date" id="pubdate" name="pubdate">
+
+		<label for="meetingdate">Sammanträdesdatum: </label>
+		<input type="date" id="meetingdate" name="meetingdate">
+
+		<input type="submit" value="Publicera">
+	</form>
+</main>
+
+<script>
+	var main = document.getElementById("posts"); // hämta main elementet, för att spara alla posts i 
+
+	fetch("http://172.20.1.15/kommun/")
+	  .then(function(response) { return response.json(); })
+	  .then(function(data) {
+			for (var item in data) {
+			    console.log(data[item]); // vi kommer åt underobjektet med posts[item]
+
+			    var section = document.createElement("section"); // skapa en section för varje enskild post
+			    //var list = document.createElement("ul"); // ul element för listan
+			    var link = document.createElement("a");
+			    var title = document.createElement("h1");
+			    var stub = document.createElement("p");
+
+			    link.href = "post.html?id=" + data[item].id;
+		    	link.textContent = data[item].title + ", " + data[item].meetingdate;
+		    	title.appendChild(link);
+		    	stub.textContent = data[item].stub;
+
+			    section.appendChild(link); // fäst listan på section elementet
+			    section.appendChild(stub); // fäst listan på section elementet
+
+			    main.appendChild(section); // fäst section på 
+			}
+	  });
+</script>
+</body>
+</html>
