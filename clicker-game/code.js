@@ -1,7 +1,7 @@
 var bank = 0;
 var clickVal = 1;
 var clickMod = 1;
-var perTick = 1;
+var perTick = 0;
 var tickMod = 1;
 
 var upgrades = [
