@@ -12,12 +12,14 @@ graphics, possibly themes
 var bank = 0;
 var clickVal = 1;
 var clickMod = 1;
-var perTick = 0;
-var tickMod = 1;
+var perSecond = 0;
+var psMod = 1;
+var tickRate = 30;
 
 var upgrades = [
-  {name: "lejon", displayName: "Lejon", cost: 15, perTick: 1, tickMod: 0, unlock: 2, isUnlocked: false, count: 0},
-  {name: "duckhuntdog", displayName: "Duck Hunt Dog", cost: 100, perTick: 5, tickMod: 0, unlock: 100, isUnlocked: false, count: 0}
+  {name: "lejon", displayName: "Lejon", cost: 15, perSecond: 1, psMod: 0, unlock: 2, isUnlocked: false, count: 0},
+  {name: "duckhuntdog", displayName: "Duck Hunt Dog", cost: 100, perSecond: 5, psMod: 0, unlock: 100, isUnlocked: false, count: 0},
+  {name: "zebra", displayName: "Zebra", cost: 4000, perSecond: 0, psMod: 1.25, unlock: 400, isUnlocked: false, count: 0}
 ];
 
 button = document.getElementById("clickerbutton");
@@ -25,17 +27,36 @@ button = document.getElementById("clickerbutton");
 button.addEventListener("click", function() {
   console.log("click");
   document.getElementById("clickcount").innerHTML = Math.floor(bank += clickVal * clickMod);
-  button.style.background = "rgb(" + Math.floor(Math.random() * 64 + 64) + "," + Math.floor(Math.random() * 64 + 64) + "," + Math.floor(Math.random() * 64 + 64) + ")";
+  buttonColor();
   updateValues();
 });
 
+function buttonColor() {
+  var val = 255+64;
+  var red = Math.floor(Math.random() * 255); val -= red;
+  if(val>255) {
+    var green = Math.floor(Math.random() * 255); val -= green;
+  } else {
+    var green = Math.floor(Math.random() * val); val -= green;
+  }
+  var blue = val;
+  button.style.background = "rgb(" + red + "," + green + "," + blue + ")";
+  console.log("rgb(" + red + "," + green + "," + blue + ")");
+  //button.style.background = "rgb(" + Math.floor(Math.random() * 64 + 64) + "," + Math.floor(Math.random() * 64 + 64) + "," + Math.floor(Math.random() * 64 + 64) + ")";
+}
+
 function updateValues() {
   document.getElementById("clickcount").innerHTML = Math.floor(bank);
-  document.getElementById("pertick").innerHTML = perTick * tickMod;
+  document.getElementById("persecond").innerHTML = perSecond * psMod;
   document.getElementsByTagName("title")[0].innerHTML = Math.floor(bank);
+  var unlockedAmount = 0;
+  /* get amount of unlocked upgrades */
   for(var i = 0; i < upgrades.length; i++) {
+    if(upgrades[i].isUnlocked) unlockedAmount++;
+  }
+  for(var i = 0; i < unlockedAmount; i++) {
     document.getElementById(upgrades[i].name + "cost").innerHTML = upgrades[i].cost + " clicks";
-    document.getElementById(upgrades[i].name + "count").innerHTML = upgrades[i].count;
+    document.getElementById(upgrades[i].name + "count").innerHTML = upgrades[i].count;1
   }
 }
 
@@ -50,17 +71,17 @@ function checkUpgrades() {
 }
 
 function addUpgradeToList(upgrade) {
-  document.getElementById("upgrades").innerHTML += "<li><button id=" + upgrade.name + " class='upgrade' onclick='buyUpgrade(this.id)'>" + upgrade.displayName + "<span class='upgrade' id=" + upgrade.name + "count> 0</span><p class='upgrade' id=" + upgrade.name + "cost>" + upgrade.cost + " clicks</p></button></li>";
+  document.getElementById("upgrades").innerHTML += "<li><button id=" + upgrade.name + " class='upgrade' onclick='buyUpgrade(this.id); '>" + upgrade.displayName + "<span class='upgrade' id=" + upgrade.name + "count> 0</span><p class='upgrade' id=" + upgrade.name + "cost>" + upgrade.cost + " clicks</p></button></li>";
 }
 
 function buyUpgrade(upgrade) {
   for(var i = 0; i < upgrades.length; i++) {
     if(upgrades[i].name == upgrade && bank >= upgrades[i].cost) {
       bank -= upgrades[i].cost;
-      perTick += upgrades[i].perTick;
-      tickMod += upgrades[i].tickMod;
+      perSecond += upgrades[i].perSecond;
+      psMod += upgrades[i].psMod;
       upgrades[i].count++;
-      upgrades[i].cost = Math.floor(upgrades[i].cost * 1.718);
+      upgrades[i].cost = Math.floor(upgrades[i].cost * 1.18);
       updateValues();
     }
   }
@@ -91,9 +112,9 @@ function eraseCookie(name) {
     createCookie(name,"",-1);
 }
 
-// HEARTBEAT
+
 window.setInterval(function() {
-  document.getElementById("clickcount").innerHTML = Math.floor(bank += perTick * tickMod * 0.1);
+  document.getElementById("clickcount").innerHTML = Math.floor(bank += perSecond * psMod / tickRate);
   checkUpgrades();
   updateValues();
-}, 100);
+}, 1000/tickRate);
