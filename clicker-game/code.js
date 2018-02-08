@@ -1,10 +1,8 @@
 /* TODO
 
-save data (cookies)
 1 time upgrades
-clicking upgrades
 balancing
-graphics, possibly themes
+graphics
 
 */
 
@@ -17,18 +15,27 @@ var psMod = 1;
 var tickRate = 30;
 
 var upgrades = [
-  {name: "lejon", displayName: "Lejon", cost: 15, perSecond: 1, psMod: 0, unlock: 2, isUnlocked: false, count: 0},
-  {name: "duckhuntdog", displayName: "Duck Hunt Dog", cost: 100, perSecond: 5, psMod: 0, unlock: 100, isUnlocked: false, count: 0},
-  {name: "zebra", displayName: "Zebra", cost: 4000, perSecond: 0, psMod: 1.25, unlock: 400, isUnlocked: false, count: 0}
+  {name: "lejon", displayName: "Lejon", cost: 15, perSecond: 1, psMod: 0, clickVal: 0, clickMod: 0, unlock: 0, isUnlocked: false, count: 0},
+  {name: "duckhuntdog", displayName: "Duck Hunt Dog", cost: 100, perSecond: 5, psMod: 0, clickVal: 0, clickMod: 0, unlock: 50, isUnlocked: false, count: 0},
+  {name: "clickboi", displayName: "Click Boi", cost: 200, perSecond: 0, psMod: 0, clickVal: 3, clickMod: 0, unlock: 100, isUnlocked: false, count: 0},
+  {name: "zebra", displayName: "Zebra", cost: 4000, perSecond: 0, psMod: .25, clickVal: 0, clickMod: 0, unlock: 400, isUnlocked: false, count: 0}
 ];
+
+if(readCookie("isSaved")) {
+  bank = parseFloat(readCookie("bank"));
+  for(var i = 0; i < upgrades.length; i++) {
+    upgrades[i].count = parseFloat(readCookie(upgrades[i].name + "Count"));
+  }
+  updateValues();
+}
 
 button = document.getElementById("clickerbutton");
 
 button.addEventListener("click", function() {
-  console.log("click");
   document.getElementById("clickcount").innerHTML = Math.floor(bank += clickVal * clickMod);
   buttonColor();
   updateValues();
+  saveData();
 });
 
 function buttonColor() {
@@ -42,10 +49,19 @@ function buttonColor() {
   var blue = val;
   button.style.background = "rgb(" + red + "," + green + "," + blue + ")";
   console.log("rgb(" + red + "," + green + "," + blue + ")");
-  //button.style.background = "rgb(" + Math.floor(Math.random() * 64 + 64) + "," + Math.floor(Math.random() * 64 + 64) + "," + Math.floor(Math.random() * 64 + 64) + ")";
 }
 
 function updateValues() {
+  clickVal = 1;
+  clickMod = 1;
+  perSecond = 0;
+  psMod = 1;
+  for(var i = 0; i < upgrades.length; i++) {
+    clickVal += upgrades[i].clickVal * upgrades[i].count;
+    clickMod += upgrades[i].clickMod * upgrades[i].count;
+    perSecond += upgrades[i].perSecond * upgrades[i].count;
+    psMod += upgrades[i].psMod * upgrades[i].count;
+  }
   document.getElementById("clickcount").innerHTML = Math.floor(bank);
   document.getElementById("persecond").innerHTML = perSecond * psMod;
   document.getElementsByTagName("title")[0].innerHTML = Math.floor(bank);
@@ -56,8 +72,9 @@ function updateValues() {
   }
   for(var i = 0; i < unlockedAmount; i++) {
     document.getElementById(upgrades[i].name + "cost").innerHTML = upgrades[i].cost + " clicks";
-    document.getElementById(upgrades[i].name + "count").innerHTML = upgrades[i].count;1
+    document.getElementById(upgrades[i].name + "count").innerHTML = upgrades[i].count;
   }
+  saveData();
 }
 
 function checkUpgrades() {
@@ -78,10 +95,8 @@ function buyUpgrade(upgrade) {
   for(var i = 0; i < upgrades.length; i++) {
     if(upgrades[i].name == upgrade && bank >= upgrades[i].cost) {
       bank -= upgrades[i].cost;
-      perSecond += upgrades[i].perSecond;
-      psMod += upgrades[i].psMod;
       upgrades[i].count++;
-      upgrades[i].cost = Math.floor(upgrades[i].cost * 1.18);
+      upgrades[i].cost = Math.floor(upgrades[i].cost * 1.2);
       updateValues();
     }
   }
@@ -112,9 +127,20 @@ function eraseCookie(name) {
     createCookie(name,"",-1);
 }
 
+function saveData() {
+  createCookie("bank", bank);
+  for(var i = 0; i < upgrades.length; i++) {
+    createCookie(upgrades[i].name + "Count", upgrades[i].count);
+  }
+  createCookie("isSaved", true);
+}
 
 window.setInterval(function() {
   document.getElementById("clickcount").innerHTML = Math.floor(bank += perSecond * psMod / tickRate);
   checkUpgrades();
   updateValues();
 }, 1000/tickRate);
+
+window.setInterval(function() {
+  saveData();
+},10000);
